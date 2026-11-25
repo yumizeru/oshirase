@@ -7,10 +7,10 @@ REG = "C:/Windows/Fonts/YuGothM.ttc"
 img = Image.new("RGB", (W, H), BG)
 d = ImageDraw.Draw(img)
 x = 80
-d.text((x, 150), "賃貸管理のお知らせ文・貼り紙", font=ImageFont.truetype(REG, 40), fill=SUB, anchor="lm")
+d.text((x, 150), "町内会・PTA・賃貸管理・会社・お店", font=ImageFont.truetype(REG, 40), fill=SUB, anchor="lm")
 d.text((x, 260), "お知らせ文メーカー", font=ImageFont.truetype(BOLD, 84), fill="white", anchor="lm")
 d.text((x, 370), "空欄を埋めて、そのまま印刷", font=ImageFont.truetype(BOLD, 48), fill=AC, anchor="lm")
-d.text((x, 460), "登録不要・無料・50種", font=ImageFont.truetype(REG, 40), fill=SUB, anchor="lm")
+d.text((x, 460), "登録不要・無料・475種", font=ImageFont.truetype(REG, 40), fill=SUB, anchor="lm")
 x0, y0, w, h = 900, 170, 220, 300
 fold = w // 5
 d.rounded_rectangle((x0, y0, x0 + w, y0 + h), radius=14, fill="white")
