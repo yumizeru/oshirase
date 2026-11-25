@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://yumizeru.github.io/oshirase/sitemap.xml
