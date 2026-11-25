@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>家賃の日割り計算ツール｜入居日・退去日から日割り家賃と共益費を自動計算</title>
+<meta name="description" content="月の途中で入居・退去したときの家賃と共益費の日割りを計算します。その月の日数・30日・365日の3つの計算方法に対応。登録不要・無料。">
+<link rel="canonical" href="https://yumizeru.github.io/oshirase/c/hiwari.html">
+<meta property="og:title" content="家賃の日割り計算ツール｜入居日・退去日から日割り家賃と共益費を自動計算">
+<meta property="og:description" content="月の途中で入居・退去したときの家賃と共益費の日割りを計算します。その月の日数・30日・365日の3つの計算方法に対応。登録不要・無料。">
+<meta property="og:url" content="https://yumizeru.github.io/oshirase/c/hiwari.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://yumizeru.github.io/oshirase/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../icon.png">
+<link rel="stylesheet" href="../style.css">
+<style>
+.calc { display: grid; grid-template-columns: 360px 1fr; gap: 20px; align-items: start; }
+.calc .fields select { width: 100%; font-size: 17px; padding: 10px 12px; border: 2px solid var(--line); border-radius: 8px; background: #fff; }
+.unit { display: flex; align-items: center; gap: 6px; }
+.unit span { white-space: nowrap; }
+.unit input, .unit select { flex: 1 1 auto; min-width: 0; }
+.calc > * { min-width: 0; }
+.result { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.result table { width: 100%; border-collapse: collapse; }
+.result th, .result td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+.result td { text-align: right; font-variant-numeric: tabular-nums; font-size: 18px; }
+.result tr.main th, .result tr.main td { font-weight: bold; color: var(--navy); font-size: 21px; border-bottom: 0; }
+.howto { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-top: 20px; }
+.howto h2 { margin-top: 8px; }
+@media (max-width: 820px) { .calc { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="site"><a href="../">お知らせ文メーカー</a><span>お知らせ文と計算ツール（無料）</span></header>
+<main>
+<p class="crumb"><a href="../">お知らせ文メーカー</a> ＞ <a href="./">計算ツール</a></p>
+<h1>家賃の日割り計算<small>登録不要・無料</small></h1>
+<p class="lead">月の途中で入居・退去したときの家賃と共益費を、日割りで計算します。計算方法は契約書に合わせて選んでください。</p>
+<div class="calc">
+<form class="fields" id="f" onsubmit="return false"><label for="rent">月額家賃</label><div class="unit"><input id="rent" type="number" inputmode="decimal" value="65000" min="0"><span>円</span></div>
+<label for="fee">共益費・管理費（月額）</label><div class="unit"><input id="fee" type="number" inputmode="decimal" value="3000" min="0"><span>円</span></div><p class="hint">ない場合は 0</p>
+<label for="kind">どちらの日割り？</label><div class="unit"><select id="kind"><option value="in" selected>入居（この日から月末まで）</option><option value="out">退去（月初からこの日まで）</option></select></div>
+<label for="day">入居日・退去日</label><div class="unit"><input id="day" type="date"></div>
+<label for="way">計算方法</label><div class="unit"><select id="way"><option value="month" selected>その月の日数で割る</option><option value="d30">30日で割る</option><option value="d365">年額を365日で割る</option></select></div><p class="hint">契約書の「日割り」の決まりに合わせる</p></form>
+<div class="result"><table id="r"></table></div>
+</div>
+<aside class="cta">
+<h2>毎月の記録は、Excelでまとめて管理</h2>
+<p>「家賃の入金管理表」：入居者ごとの毎月の入金チェック・年間の入金状況・滞納と督促の記録を、1つのExcelで管理できます。黄色のセルに入れるだけで、計算は自動です。</p>
+<p class="cta-links"><a class="btn" href="https://yumizeru.booth.pm/items/9218077">BOOTHで見る（Excel・680円）</a><a class="btn sub" href="https://yumizeru.booth.pm/items/9218710">無料お試し版（Word 4種）</a></p>
+</aside>
+<section class="howto"><h2>計算のしかた</h2>
+<p>日割り家賃 ＝ 月額家賃 ÷ その月の日数 × 住んだ日数（1円未満は切り捨て）。入居の日割りは入居日から月末まで、退去の日割りは月初から退去日までを数えます。</p>
+<p>「30日で割る」「年額を365日で割る」と決めている契約もあります。どれを使うかは賃貸借契約書で確かめてください。</p>
+<h2>例</h2>
+<p>家賃65,000円の部屋に4月10日から入居する場合、4月は30日なので、65,000 ÷ 30 × 21日 ＝ 45,500円です。</p></section>
+<section class="more"><h2>ほかの計算ツール</h2><ul class="list"><li><a href="rimawari.html">不動産の利回り計算</a></li><li><a href="seikyu.html">請求書の消費税・源泉徴収の計算</a></li><li><a href="zangyo.html">残業代の計算</a></li><li><a href="chokin.html">貯金シミュレーション</a></li></ul></section>
+</main>
+<script>
+const yen = (n) => (isFinite(n) ? Math.round(n) : 0).toLocaleString("ja-JP") + "円";
+const day = document.getElementById("day");
+if (day && !day.value) day.value = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+function calc(v) {
+const d = new Date(v.day || new Date()); const y = d.getFullYear(), m = d.getMonth(), day = d.getDate();
+const dim = new Date(y, m + 1, 0).getDate();
+const days = v.kind === "in" ? dim - day + 1 : day;
+const per = (x) => v.way === "month" ? x / dim : v.way === "d30" ? x / 30 : x * 12 / 365;
+const r = Math.floor(per(+v.rent) * days), f = Math.floor(per(+v.fee) * days);
+return [["日割りの日数", days + "日（" + (m + 1) + "月は" + dim + "日まで）"], ["日割り家賃", yen(r)], ["日割り共益費", yen(f)], ["合計", yen(r + f), 1]];
+}
+function run() {
+  const v = {}; document.querySelectorAll("#f input, #f select").forEach((e) => v[e.id] = e.value);
+  let rows; try { rows = calc(v); } catch (e) { rows = [["入力を確かめてください", ""]]; }
+  document.getElementById("r").innerHTML = rows.map(([k, x, m]) => '<tr' + (m ? ' class="main"' : '') + '><th>' + k + '</th><td>' + x + '</td></tr>').join("");
+}
+document.getElementById("f").addEventListener("input", run); run();
+</script>
+<footer class="site">
+<p>計算結果は目安です。契約書・就業規則・税務署などで確かめてからお使いください。</p>
+<p><a href="../">お知らせ文メーカー</a>　｜　<a href="./">計算ツールの一覧</a>　｜　<a href="https://yumizeru.booth.pm/">Word・Excelテンプレート（BOOTH）</a>　｜　<a href="https://x.com/jimu_template">X</a></p>
+</footer>
+</body>
+</html>

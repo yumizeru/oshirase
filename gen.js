@@ -142,7 +142,7 @@ const head = (title, desc, url, depth) => `<!doctype html>
 
 const footer = (depth) => `<footer class="site">
 <p>文面は自由にお使いいただけます（登録不要・無料）。内容は、契約や会則・社内のルールに合わせてご確認ください。</p>
-<p><a href="${depth}">${SITE}</a>　｜　<a href="https://yumizeru.booth.pm/">Word版テンプレート（BOOTH）</a>　｜　<a href="https://note.com/yumizeru_friday">書き方のコツ（note）</a>　｜　<a href="https://x.com/jimu_template">X</a></p>
+<p><a href="${depth}">${SITE}</a>　｜　<a href="${depth}c/">計算ツール</a>　｜　<a href="https://yumizeru.booth.pm/items/9218710">無料お試し版</a>　｜　<a href="https://yumizeru.booth.pm/">Word版テンプレート（BOOTH）</a>　｜　<a href="https://note.com/yumizeru_friday">書き方のコツ（note）</a>　｜　<a href="https://x.com/jimu_template">X</a></p>
 </footer>
 </body>
 </html>
@@ -237,7 +237,7 @@ const index = head(`${SITE}｜お知らせ文・案内文を無料で作成・�
 <h1>${SITE}<small>お知らせ文・案内文 ${docs.length}種</small></h1>
 <p class="lead">町内会・PTA・賃貸管理・会社・お店で使うお知らせ文を${docs.length}種用意しました。使いたい文書を選んで、名前や日付を入れるだけで、A4で印刷できます。登録は不要です。</p>
 ${searchBox("キーワードで探す（例：総会、断水、休業、お礼）")}
-<nav class="genres">${GENRES.map((g) => `<a href="#${g.id}">${esc(g.name)}</a>`).join("")}</nav>
+<nav class="genres">${GENRES.map((g) => `<a href="#${g.id}">${esc(g.name)}</a>`).join("")}<a href="c/">計算ツール（家賃の日割り・残業代など）</a></nav>
 ${GENRES.map((g) => `<div class="genre" id="${g.id}">
 <h2 class="genre-h"><a href="g/${g.id}.html">${esc(g.name)}</a></h2>
 ${sets.filter((s) => s.genre === g).map((s) => setList(s, "d/", "h3")).join("\n")}
@@ -254,7 +254,8 @@ fs.writeFileSync(path.join(out, "index.html"), index);
 
 // サイトマップ
 const today = new Date().toISOString().slice(0, 10);
-const urls = [BASE, ...GENRES.map((g) => `${BASE}g/${g.id}.html`), ...docs.map((d) => `${BASE}d/${d.slug}.html`)];
+const calcs = fs.existsSync(path.join(out, "c")) ? fs.readdirSync(path.join(out, "c")).map((f) => `${BASE}c/${f === "index.html" ? "" : f}`) : [];
+const urls = [BASE, ...calcs, ...GENRES.map((g) => `${BASE}g/${g.id}.html`), ...docs.map((d) => `${BASE}d/${d.slug}.html`)];
 fs.writeFileSync(path.join(out, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((u) => `<url><loc>${u}</loc><lastmod>${today}</lastmod></url>`).join("\n")}

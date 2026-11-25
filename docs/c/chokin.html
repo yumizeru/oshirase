@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>貯金シミュレーション｜毎月の貯金額から目標達成までの期間を計算</title>
+<meta name="description" content="毎月の貯金額とボーナスからの貯金で、目標の金額が貯まるまでの期間と、1年後・5年後・10年後の貯金額を計算します。登録不要・無料。">
+<link rel="canonical" href="https://yumizeru.github.io/oshirase/c/chokin.html">
+<meta property="og:title" content="貯金シミュレーション｜毎月の貯金額から目標達成までの期間を計算">
+<meta property="og:description" content="毎月の貯金額とボーナスからの貯金で、目標の金額が貯まるまでの期間と、1年後・5年後・10年後の貯金額を計算します。登録不要・無料。">
+<meta property="og:url" content="https://yumizeru.github.io/oshirase/c/chokin.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://yumizeru.github.io/oshirase/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../icon.png">
+<link rel="stylesheet" href="../style.css">
+<style>
+.calc { display: grid; grid-template-columns: 360px 1fr; gap: 20px; align-items: start; }
+.calc .fields select { width: 100%; font-size: 17px; padding: 10px 12px; border: 2px solid var(--line); border-radius: 8px; background: #fff; }
+.unit { display: flex; align-items: center; gap: 6px; }
+.unit span { white-space: nowrap; }
+.unit input, .unit select { flex: 1 1 auto; min-width: 0; }
+.calc > * { min-width: 0; }
+.result { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.result table { width: 100%; border-collapse: collapse; }
+.result th, .result td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+.result td { text-align: right; font-variant-numeric: tabular-nums; font-size: 18px; }
+.result tr.main th, .result tr.main td { font-weight: bold; color: var(--navy); font-size: 21px; border-bottom: 0; }
+.howto { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-top: 20px; }
+.howto h2 { margin-top: 8px; }
+@media (max-width: 820px) { .calc { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="site"><a href="../">お知らせ文メーカー</a><span>お知らせ文と計算ツール（無料）</span></header>
+<main>
+<p class="crumb"><a href="../">お知らせ文メーカー</a> ＞ <a href="./">計算ツール</a></p>
+<h1>貯金シミュレーション<small>登録不要・無料</small></h1>
+<p class="lead">毎月の貯金額とボーナスからの貯金で、目標の金額まで何か月かかるかを計算します。</p>
+<div class="calc">
+<form class="fields" id="f" onsubmit="return false"><label for="now">今の貯金</label><div class="unit"><input id="now" type="number" inputmode="decimal" value="300000" min="0"><span>円</span></div>
+<label for="month">毎月の貯金額</label><div class="unit"><input id="month" type="number" inputmode="decimal" value="30000" min="0"><span>円</span></div>
+<label for="bonus">ボーナスからの貯金（1回分）</label><div class="unit"><input id="bonus" type="number" inputmode="decimal" value="100000" min="0"><span>円</span></div><p class="hint">年2回（6月・12月）として計算</p>
+<label for="goal">目標の金額</label><div class="unit"><input id="goal" type="number" inputmode="decimal" value="3000000" min="0"><span>円</span></div></form>
+<div class="result"><table id="r"></table></div>
+</div>
+<aside class="cta">
+<h2>毎月の記録は、Excelでまとめて管理</h2>
+<p>「家計簿（月別・年間の自動集計）」：毎日の収入と支出を入れるだけで、費目ごとの月別・年間の集計と、予算に対して使った割合が自動で分かります。黄色のセルに入れるだけで、計算は自動です。</p>
+<p class="cta-links"><a class="btn" href="https://yumizeru.booth.pm/items/9218134">BOOTHで見る（Excel・480円）</a><a class="btn sub" href="https://yumizeru.booth.pm/items/9218710">無料お試し版（Word 4種）</a></p>
+</aside>
+<section class="howto"><h2>計算のしかた</h2>
+<p>毎月の貯金額を積み上げ、ボーナスからの貯金を年2回足して計算しています。利息は入れていません。</p>
+<p>貯金を続けるコツは、先に貯金の額を決めて、残りで生活することです。毎月の支出が分かると、無理なく貯められる額が見えてきます。</p></section>
+<section class="more"><h2>ほかの計算ツール</h2><ul class="list"><li><a href="hiwari.html">家賃の日割り計算</a></li><li><a href="rimawari.html">不動産の利回り計算</a></li><li><a href="seikyu.html">請求書の消費税・源泉徴収の計算</a></li><li><a href="zangyo.html">残業代の計算</a></li></ul></section>
+</main>
+<script>
+const yen = (n) => (isFinite(n) ? Math.round(n) : 0).toLocaleString("ja-JP") + "円";
+const day = document.getElementById("day");
+if (day && !day.value) day.value = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+function calc(v) {
+const at = (n) => (+v.now) + (+v.month) * n + (+v.bonus) * Math.floor(n / 6);
+let n = 0; while (at(n) < +v.goal && n < 1200) n++;
+const span = n >= 1200 ? "100年以上" : Math.floor(n / 12) + "年" + (n % 12) + "か月";
+return [["1年後", yen(at(12))], ["5年後", yen(at(60))], ["10年後", yen(at(120))], ["目標までの期間", span, 1]];
+}
+function run() {
+  const v = {}; document.querySelectorAll("#f input, #f select").forEach((e) => v[e.id] = e.value);
+  let rows; try { rows = calc(v); } catch (e) { rows = [["入力を確かめてください", ""]]; }
+  document.getElementById("r").innerHTML = rows.map(([k, x, m]) => '<tr' + (m ? ' class="main"' : '') + '><th>' + k + '</th><td>' + x + '</td></tr>').join("");
+}
+document.getElementById("f").addEventListener("input", run); run();
+</script>
+<footer class="site">
+<p>計算結果は目安です。契約書・就業規則・税務署などで確かめてからお使いください。</p>
+<p><a href="../">お知らせ文メーカー</a>　｜　<a href="./">計算ツールの一覧</a>　｜　<a href="https://yumizeru.booth.pm/">Word・Excelテンプレート（BOOTH）</a>　｜　<a href="https://x.com/jimu_template">X</a></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>不動産の利回り計算ツール｜表面利回り・実質利回りを自動計算</title>
+<meta name="description" content="物件価格と家賃収入から、アパート・マンション投資の表面利回りと実質利回りを計算します。経費や購入時の諸費用も入れられます。登録不要・無料。">
+<link rel="canonical" href="https://yumizeru.github.io/oshirase/c/rimawari.html">
+<meta property="og:title" content="不動産の利回り計算ツール｜表面利回り・実質利回りを自動計算">
+<meta property="og:description" content="物件価格と家賃収入から、アパート・マンション投資の表面利回りと実質利回りを計算します。経費や購入時の諸費用も入れられます。登録不要・無料。">
+<meta property="og:url" content="https://yumizeru.github.io/oshirase/c/rimawari.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://yumizeru.github.io/oshirase/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../icon.png">
+<link rel="stylesheet" href="../style.css">
+<style>
+.calc { display: grid; grid-template-columns: 360px 1fr; gap: 20px; align-items: start; }
+.calc .fields select { width: 100%; font-size: 17px; padding: 10px 12px; border: 2px solid var(--line); border-radius: 8px; background: #fff; }
+.unit { display: flex; align-items: center; gap: 6px; }
+.unit span { white-space: nowrap; }
+.unit input, .unit select { flex: 1 1 auto; min-width: 0; }
+.calc > * { min-width: 0; }
+.result { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.result table { width: 100%; border-collapse: collapse; }
+.result th, .result td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+.result td { text-align: right; font-variant-numeric: tabular-nums; font-size: 18px; }
+.result tr.main th, .result tr.main td { font-weight: bold; color: var(--navy); font-size: 21px; border-bottom: 0; }
+.howto { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-top: 20px; }
+.howto h2 { margin-top: 8px; }
+@media (max-width: 820px) { .calc { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="site"><a href="../">お知らせ文メーカー</a><span>お知らせ文と計算ツール（無料）</span></header>
+<main>
+<p class="crumb"><a href="../">お知らせ文メーカー</a> ＞ <a href="./">計算ツール</a></p>
+<h1>不動産の利回り計算<small>登録不要・無料</small></h1>
+<p class="lead">物件価格と家賃収入から、表面利回りと実質利回りを計算します。</p>
+<div class="calc">
+<form class="fields" id="f" onsubmit="return false"><label for="price">物件価格</label><div class="unit"><input id="price" type="number" inputmode="decimal" value="30000000" min="0"><span>円</span></div>
+<label for="cost">購入時の諸費用</label><div class="unit"><input id="cost" type="number" inputmode="decimal" value="2000000" min="0"><span>円</span></div><p class="hint">仲介手数料・登記費用・不動産取得税など。目安は物件価格の7〜8%</p>
+<label for="rent">家賃収入（1か月・全室ぶん）</label><div class="unit"><input id="rent" type="number" inputmode="decimal" value="220000" min="0"><span>円</span></div>
+<label for="vac">空室率</label><div class="unit"><input id="vac" type="number" inputmode="decimal" value="5" min="0"><span>%</span></div><p class="hint">1年のうち空いている割合の見込み</p>
+<label for="exp">年間の経費</label><div class="unit"><input id="exp" type="number" inputmode="decimal" value="600000" min="0"><span>円</span></div><p class="hint">管理費・修繕費・固定資産税・保険料など</p></form>
+<div class="result"><table id="r"></table></div>
+</div>
+<aside class="cta">
+<h2>毎月の記録は、Excelでまとめて管理</h2>
+<p>「大家さんの不動産収支表」：月別の収支・物件ごとの収支と利回り・ローン返済の予定表を、Excelでまとめて管理できます。黄色のセルに入れるだけで、計算は自動です。</p>
+<p class="cta-links"><a class="btn" href="https://yumizeru.booth.pm/items/9218103">BOOTHで見る（Excel・580円）</a><a class="btn sub" href="https://yumizeru.booth.pm/items/9218710">無料お試し版（Word 4種）</a></p>
+</aside>
+<section class="howto"><h2>計算のしかた</h2>
+<p>表面利回り ＝ 満室のときの年間家賃収入 ÷ 物件価格 × 100</p>
+<p>実質利回り ＝（空室を引いた年間家賃収入 － 年間の経費）÷（物件価格 ＋ 購入時の諸費用）× 100</p>
+<p>広告に出ている利回りは、ほとんどが表面利回りです。経費と空室を入れた実質利回りで比べると、物件の違いが分かりやすくなります。ローンの返済は入れていません。</p></section>
+<section class="more"><h2>ほかの計算ツール</h2><ul class="list"><li><a href="hiwari.html">家賃の日割り計算</a></li><li><a href="seikyu.html">請求書の消費税・源泉徴収の計算</a></li><li><a href="zangyo.html">残業代の計算</a></li><li><a href="chokin.html">貯金シミュレーション</a></li></ul></section>
+</main>
+<script>
+const yen = (n) => (isFinite(n) ? Math.round(n) : 0).toLocaleString("ja-JP") + "円";
+const day = document.getElementById("day");
+if (day && !day.value) day.value = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+function calc(v) {
+const year = +v.rent * 12, real = year * (1 - (+v.vac) / 100), net = real - (+v.exp);
+const gross = year / (+v.price) * 100, netY = net / ((+v.price) + (+v.cost)) * 100;
+return [["年間の家賃収入（満室）", yen(year)], ["空室を引いた収入", yen(Math.round(real))], ["経費を引いた手取り（年）", yen(Math.round(net))], ["表面利回り", gross.toFixed(2) + "%"], ["実質利回り", netY.toFixed(2) + "%", 1]];
+}
+function run() {
+  const v = {}; document.querySelectorAll("#f input, #f select").forEach((e) => v[e.id] = e.value);
+  let rows; try { rows = calc(v); } catch (e) { rows = [["入力を確かめてください", ""]]; }
+  document.getElementById("r").innerHTML = rows.map(([k, x, m]) => '<tr' + (m ? ' class="main"' : '') + '><th>' + k + '</th><td>' + x + '</td></tr>').join("");
+}
+document.getElementById("f").addEventListener("input", run); run();
+</script>
+<footer class="site">
+<p>計算結果は目安です。契約書・就業規則・税務署などで確かめてからお使いください。</p>
+<p><a href="../">お知らせ文メーカー</a>　｜　<a href="./">計算ツールの一覧</a>　｜　<a href="https://yumizeru.booth.pm/">Word・Excelテンプレート（BOOTH）</a>　｜　<a href="https://x.com/jimu_template">X</a></p>
+</footer>
+</body>
+</html>

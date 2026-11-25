@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>請求書の消費税・源泉徴収税額の計算ツール｜税抜・税込・差引請求額を自動計算</title>
+<meta name="description" content="請求金額から消費税（10%・8%）と源泉徴収税額（10.21%）、差し引きの請求額を計算します。税抜・税込どちらからでも計算できます。登録不要・無料。">
+<link rel="canonical" href="https://yumizeru.github.io/oshirase/c/seikyu.html">
+<meta property="og:title" content="請求書の消費税・源泉徴収税額の計算ツール｜税抜・税込・差引請求額を自動計算">
+<meta property="og:description" content="請求金額から消費税（10%・8%）と源泉徴収税額（10.21%）、差し引きの請求額を計算します。税抜・税込どちらからでも計算できます。登録不要・無料。">
+<meta property="og:url" content="https://yumizeru.github.io/oshirase/c/seikyu.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://yumizeru.github.io/oshirase/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../icon.png">
+<link rel="stylesheet" href="../style.css">
+<style>
+.calc { display: grid; grid-template-columns: 360px 1fr; gap: 20px; align-items: start; }
+.calc .fields select { width: 100%; font-size: 17px; padding: 10px 12px; border: 2px solid var(--line); border-radius: 8px; background: #fff; }
+.unit { display: flex; align-items: center; gap: 6px; }
+.unit span { white-space: nowrap; }
+.unit input, .unit select { flex: 1 1 auto; min-width: 0; }
+.calc > * { min-width: 0; }
+.result { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.result table { width: 100%; border-collapse: collapse; }
+.result th, .result td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+.result td { text-align: right; font-variant-numeric: tabular-nums; font-size: 18px; }
+.result tr.main th, .result tr.main td { font-weight: bold; color: var(--navy); font-size: 21px; border-bottom: 0; }
+.howto { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-top: 20px; }
+.howto h2 { margin-top: 8px; }
+@media (max-width: 820px) { .calc { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="site"><a href="../">お知らせ文メーカー</a><span>お知らせ文と計算ツール（無料）</span></header>
+<main>
+<p class="crumb"><a href="../">お知らせ文メーカー</a> ＞ <a href="./">計算ツール</a></p>
+<h1>請求書の消費税・源泉徴収の計算<small>登録不要・無料</small></h1>
+<p class="lead">請求金額から、消費税と源泉徴収税額、差し引きで振り込まれる金額を計算します。</p>
+<div class="calc">
+<form class="fields" id="f" onsubmit="return false"><label for="amt">金額</label><div class="unit"><input id="amt" type="number" inputmode="decimal" value="100000" min="0"><span>円</span></div>
+<label for="base">入れた金額は</label><div class="unit"><select id="base"><option value="ex" selected>税抜</option><option value="in">税込</option></select></div>
+<label for="rate">消費税率</label><div class="unit"><select id="rate"><option value="10" selected>10%</option><option value="8">8%（軽減税率）</option></select></div>
+<label for="wh">源泉徴収</label><div class="unit"><select id="wh"><option value="yes" selected>する</option><option value="no">しない</option></select></div><p class="hint">原稿料・デザイン料・講演料など、個人への報酬で必要</p></form>
+<div class="result"><table id="r"></table></div>
+</div>
+<aside class="cta">
+<h2>毎月の記録は、Excelでまとめて管理</h2>
+<p>「見積書・請求書・納品書・領収書（自動計算）」：品目と数量を入れるだけで、小計・消費税・合計が自動で入る見積書・請求書・納品書・領収書です。取引先と品目の台帳つき。黄色のセルに入れるだけで、計算は自動です。</p>
+<p class="cta-links"><a class="btn" href="https://yumizeru.booth.pm/items/9218108">BOOTHで見る（Excel・680円）</a><a class="btn sub" href="https://yumizeru.booth.pm/items/9218710">無料お試し版（Word 4種）</a></p>
+</aside>
+<section class="howto"><h2>計算のしかた</h2>
+<p>消費税 ＝ 税抜金額 × 10%（軽減税率の対象は8%）。1円未満は切り捨てています。</p>
+<p>源泉徴収税額 ＝ 税抜金額 × 10.21%（100万円を超える部分は20.42%）。請求書で消費税を分けて書いているときは、税抜金額に対して計算できます。</p>
+<p>差し引きの請求額 ＝ 税込金額 － 源泉徴収税額。相手から実際に振り込まれる金額です。</p>
+<p>源泉徴収が必要かどうかは、報酬の種類と相手（法人か個人か）で決まります。くわしくは国税庁のホームページや税務署で確かめてください。</p></section>
+<section class="more"><h2>ほかの計算ツール</h2><ul class="list"><li><a href="hiwari.html">家賃の日割り計算</a></li><li><a href="rimawari.html">不動産の利回り計算</a></li><li><a href="zangyo.html">残業代の計算</a></li><li><a href="chokin.html">貯金シミュレーション</a></li></ul></section>
+</main>
+<script>
+const yen = (n) => (isFinite(n) ? Math.round(n) : 0).toLocaleString("ja-JP") + "円";
+const day = document.getElementById("day");
+if (day && !day.value) day.value = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+function calc(v) {
+const r = +v.rate / 100; let ex, tax;
+if (v.base === "ex") { ex = +v.amt; tax = Math.floor(ex * r); } else { ex = Math.ceil(+v.amt / (1 + r)); tax = +v.amt - ex; }
+const wh = v.wh === "yes" ? Math.floor(ex <= 1000000 ? ex * 0.1021 : (ex - 1000000) * 0.2042 + 102100) : 0;
+return [["税抜金額", yen(ex)], ["消費税（" + v.rate + "%）", yen(tax)], ["税込金額", yen(ex + tax)], ["源泉徴収税額", yen(wh)], ["差し引きの請求額", yen(ex + tax - wh), 1]];
+}
+function run() {
+  const v = {}; document.querySelectorAll("#f input, #f select").forEach((e) => v[e.id] = e.value);
+  let rows; try { rows = calc(v); } catch (e) { rows = [["入力を確かめてください", ""]]; }
+  document.getElementById("r").innerHTML = rows.map(([k, x, m]) => '<tr' + (m ? ' class="main"' : '') + '><th>' + k + '</th><td>' + x + '</td></tr>').join("");
+}
+document.getElementById("f").addEventListener("input", run); run();
+</script>
+<footer class="site">
+<p>計算結果は目安です。契約書・就業規則・税務署などで確かめてからお使いください。</p>
+<p><a href="../">お知らせ文メーカー</a>　｜　<a href="./">計算ツールの一覧</a>　｜　<a href="https://yumizeru.booth.pm/">Word・Excelテンプレート（BOOTH）</a>　｜　<a href="https://x.com/jimu_template">X</a></p>
+</footer>
+</body>
+</html>
